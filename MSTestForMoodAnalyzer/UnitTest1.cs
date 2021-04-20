@@ -6,7 +6,7 @@ namespace MSTestForMoodAnalyzer
 {
     [TestClass]
     public class UnitTest1  //Class
-    {
+    {/* UC1*/
         [TestMethod]
         public void Given_Happymood_Expecting_Happy_Result()  //Method
         {
@@ -18,11 +18,12 @@ namespace MSTestForMoodAnalyzer
 
 
         }
-
-        public void Given_Happymood_Expecting_Sad_Result()  //Method
+        /*UC2*/
+        [TestMethod]
+        public void Given_Nullmood_Expecting_Exception_Result()  //Method
         {
-            MoodAnalyzer mood = new MoodAnalyzer("I am in sad mood"); //Create object and arrange 
-            string expected = "sad";
+            MoodAnalyzer mood = new MoodAnalyzer(null); //Create object and arrange 
+            string expected = "Object Refrence not set to an instance of an object.";
 
             string actual = mood.Analyzer();    //act
             Assert.AreEqual(expected, actual);  //Assert
