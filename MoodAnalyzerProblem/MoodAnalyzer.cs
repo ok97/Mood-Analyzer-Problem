@@ -40,7 +40,7 @@ namespace MoodAnalyzerProblem
             }
             catch(NullReferenceException ex)
             {
-                return ex.Message;
+                return "happy";
             }
         }
         
