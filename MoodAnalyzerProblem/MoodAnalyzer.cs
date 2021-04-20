@@ -16,7 +16,7 @@ namespace MoodAnalyzerProblem
     {
         string message;  //instance variable
 
-       
+
         public MoodAnalyzer() //Constructors
         {
 
@@ -29,6 +29,8 @@ namespace MoodAnalyzerProblem
         {//Handling Exception
             try
             {
+                if (this.message.Equals(string.Empty))
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.EMPTY_EXCEPTION, "Mood should not be empty");
                 if (this.message.ToLower().Contains("happy"))
                 {
                     return "happy";
@@ -38,13 +40,16 @@ namespace MoodAnalyzerProblem
                     return "sad";
                 }
             }
-            catch(NullReferenceException ex)
+            catch (MoodAnalyzerException ex)
             {
-                return "happy";
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.EMPTY_EXCEPTION, "Mood should not be null");
             }
-        }
-        
 
-        
+
+
+        }
+
+
+
     }
 }

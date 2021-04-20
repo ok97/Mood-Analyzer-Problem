@@ -46,5 +46,47 @@ namespace MSTestForMoodAnalyzer
 
 
         }
+       /* UC3.1:- NULL*/
+        [TestMethod]
+        public void Given_Nullmood_Using_CustomExpection_Return_Null()  //Method
+        {
+            MoodAnalyzer mood = new MoodAnalyzer(null); //Create object and arrange 
+            //string actual = "";
+            string expected = "Mood should not be null";
+
+            try
+            {
+               string actual = mood.Analyzer();    //act
+
+            }
+            catch (MoodAnalyzerException exception)
+            {
+                Assert.AreEqual(expected, exception.message);  //Assert
+            }       
+            
+
+
+        }
+
+        /* UC3.1:- Empty*/
+        [TestMethod]
+        public void Given_Emptymood_Using_CustomExpection_Return_Empty()  //Method
+        {
+            MoodAnalyzer mood = new MoodAnalyzer(""); //Create object and arrange 
+            //string actual = "";
+            string expected = "Mood should not be empty";
+
+            try
+            {
+               string actual = mood.Analyzer();    //act
+
+            }
+            catch (MoodAnalyzerException exception)
+            {
+                Assert.AreEqual(expected, exception.message);  //Assert
+            }       
+           
+        }
+
     }
 }
