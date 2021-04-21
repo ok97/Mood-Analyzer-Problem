@@ -86,7 +86,8 @@ namespace MSTestForMoodAnalyzer
                 Assert.AreEqual(expected, exception.message);  //Assert
             }
 
-        }/* UC4:- create default Constructor using reflection 
+        }
+        /* UC4:- create default Constructor using reflection 
                   Use Reflection to Create MoodAnalyser with default Constructor
                   - Create MoodAnalyserFactory and specify static method to create MoodAnalyser Objec
                   MoodAnalyserObject to create MoodAnalyser objecty*/
@@ -102,6 +103,35 @@ namespace MSTestForMoodAnalyzer
             {
                 MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
              obj=   factory.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
+                
+                // string actual = mood.Analyzer();    //act
+
+            }
+            catch (MoodAnalyzerException exception)
+            {
+                //Assert.Equals(actual, expected);  //Assert
+               
+            }
+            obj.Equals(expected);
+
+        }
+        /* UC5:- create Parameter Constructor Use Reflection to Create MoodAnalyser with Parameter Constructor.
+                 - Use MoodAnalyserFactory to create MoodAnalyser Object with Message Parameneter.
+         */
+
+        [TestMethod]
+        public void Given_MoodAnalyzer_Using_Reflection_Return_ParameterConstructor()  //Method
+        {
+            string message = "I am in happy mood";
+            MoodAnalyzer expected = new MoodAnalyzer("I am in happy mood"); //Create object and arrange 
+            object obj = null;
+            //string actual = "";
+           // string expected = "Mood should not be empty";
+
+            try
+            {
+                MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
+             obj=   factory.CreateMoodAnalyzerParameterObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer", message);
                 
                 // string actual = mood.Analyzer();    //act
 

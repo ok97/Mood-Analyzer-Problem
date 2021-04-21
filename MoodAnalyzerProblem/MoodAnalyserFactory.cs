@@ -9,8 +9,8 @@ using System.Reflection;
 
 namespace MoodAnalyzerProblem
 {
-   public class MoodAnalyzerFactory
-    {/* UC4:- Use Reflection to Create MoodAnalyser with default Constructor
+    public class MoodAnalyzerFactory
+    {/* UC4:- create default Constructor Use Reflection to Create MoodAnalyser with default Constructor
            - Create MoodAnalyserFactory and specify static method to create MoodAnalyser Objec
            MoodAnalyserObject to create MoodAnalyser object 
         */
@@ -30,19 +30,49 @@ namespace MoodAnalyzerProblem
                     var res = Activator.CreateInstance(moodAnalyzerType);
                     return res;
                 }
-                catch(NullReferenceException)
+                catch (NullReferenceException)
                 {
                     throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//class name not maching that time we run
-                    
+
 
                 }
             }
+            else
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "constructor not found");//Constructor name not maching that time we run
+            }
+
+
+        }
+
+        /* UC5:- create Parameter Constructor Use Reflection to Create MoodAnalyser with Parameter Constructor.
+                 - Use MoodAnalyserFactory to create MoodAnalyser Object with Message Parameneter.
+         */
+        public object CreateMoodAnalyzerParameterObject(string className, string constructor, string message)
+        {
+            Type type = typeof(MoodAnalyzer);
+
+            if (type.Name.Equals(className) || type.FullName.Equals(className))  //check class naem same or not
+            {
+                if (type.Name.Equals(constructor))
+                {
+                    //MoodAnalyzerProblem.MoodAnalyzer
+                    //string pattern = @"." + constructor + "$";
+                    // Match result = Regex.Match(className, pattern); //regex predefine class .pattern matching store result suppose pattern matching then create object than an constructor
+                    ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) }); //get constructor fetching one construct bsae on the  he feth string parameter constructor fetching 
+                    var obj = constructorInfo.Invoke(new object[] { message }); //create object that Parameter Constructor by passing message
+                    return obj;
+                }
                 else
                 {
                     throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "constructor not found");//Constructor name not maching that time we run
                 }
-            
-            
+            }
+            else
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//Constructor name not maching that time we run
+            }
         }
+
     }
 }
