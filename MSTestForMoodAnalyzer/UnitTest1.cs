@@ -46,7 +46,7 @@ namespace MSTestForMoodAnalyzer
 
 
         }
-       /* UC3.1:- NULL*/
+        /* UC3.1:- NULL*/
         [TestMethod]
         public void Given_Nullmood_Using_CustomExpection_Return_Null()  //Method
         {
@@ -56,14 +56,14 @@ namespace MSTestForMoodAnalyzer
 
             try
             {
-               string actual = mood.Analyzer();    //act
+                string actual = mood.Analyzer();    //act
 
             }
             catch (MoodAnalyzerException exception)
             {
                 Assert.AreEqual(expected, exception.message);  //Assert
-            }       
-            
+            }
+
 
 
         }
@@ -78,14 +78,41 @@ namespace MSTestForMoodAnalyzer
 
             try
             {
-               string actual = mood.Analyzer();    //act
+                string actual = mood.Analyzer();    //act
 
             }
             catch (MoodAnalyzerException exception)
             {
                 Assert.AreEqual(expected, exception.message);  //Assert
-            }       
-           
+            }
+
+        }/* UC4:- create default Constructor using reflection 
+                  Use Reflection to Create MoodAnalyser with default Constructor
+                  - Create MoodAnalyserFactory and specify static method to create MoodAnalyser Objec
+                  MoodAnalyserObject to create MoodAnalyser objecty*/
+        [TestMethod]
+        public void Given_MoodAnalyzer_Using_Reflection_Return_DefaultConstructor()  //Method
+        {
+            MoodAnalyzer expected = new MoodAnalyzer(""); //Create object and arrange 
+            object obj = null;
+            //string actual = "";
+           // string expected = "Mood should not be empty";
+
+            try
+            {
+                MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
+             obj=   factory.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
+                
+                // string actual = mood.Analyzer();    //act
+
+            }
+            catch (MoodAnalyzerException exception)
+            {
+                //Assert.Equals(actual, expected);  //Assert
+               
+            }
+            obj.Equals(expected);
+
         }
 
     }

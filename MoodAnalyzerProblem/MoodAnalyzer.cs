@@ -10,12 +10,10 @@ namespace MoodAnalyzerProblem
          - Like NULL
    TC2.1:- Given Null Mood Should Return Happy To make this Test Case pass Handle NULL Scenario using try catch and 
            return Happy
-
    */
     public class MoodAnalyzer
     {
         string message;  //instance variable
-
 
         public MoodAnalyzer() //Constructors
         {
@@ -44,12 +42,6 @@ namespace MoodAnalyzerProblem
             {
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.EMPTY_EXCEPTION, "Mood should not be null");
             }
-
-
-
         }
-
-
-
     }
 }
