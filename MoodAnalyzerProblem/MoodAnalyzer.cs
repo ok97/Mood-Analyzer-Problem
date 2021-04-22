@@ -13,15 +13,17 @@ namespace MoodAnalyzerProblem
    */
     public class MoodAnalyzer
     {
-        string message;  //instance variable
+        public string message;  //instance variable
+       
 
         public MoodAnalyzer() //Constructors
         {
 
         }
-        public MoodAnalyzer(string message) //parameterized constructor for intilizing instance member
+        public MoodAnalyzer(string message ) //parameterized constructor for intilizing instance member
         {
             this.message = message;
+            //this.methodName = methodName;
         }
         public string Analyzer()  //Analyzer method find mood
         {//Handling Exception
@@ -40,7 +42,7 @@ namespace MoodAnalyzerProblem
             }
             catch (MoodAnalyzerException ex)
             {
-                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.EMPTY_EXCEPTION, "Mood should not be null");
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
             }
         }
     }

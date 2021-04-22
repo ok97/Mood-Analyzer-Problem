@@ -33,16 +33,12 @@ namespace MoodAnalyzerProblem
                 catch (NullReferenceException)
                 {
                     throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//class name not maching that time we run
-
-
                 }
             }
             else
             {
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "constructor not found");//Constructor name not maching that time we run
             }
-
-
         }
 
         /* UC5:- create Parameter Constructor Use Reflection to Create MoodAnalyser with Parameter Constructor.
@@ -59,6 +55,7 @@ namespace MoodAnalyzerProblem
                     //MoodAnalyzerProblem.MoodAnalyzer
                     //string pattern = @"." + constructor + "$";
                     // Match result = Regex.Match(className, pattern); //regex predefine class .pattern matching store result suppose pattern matching then create object than an constructor
+
                     ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) }); //get constructor fetching one construct bsae on the  he feth string parameter constructor fetching 
                     var obj = constructorInfo.Invoke(new object[] { message }); //create object that Parameter Constructor by passing message
                     return obj;
@@ -73,6 +70,29 @@ namespace MoodAnalyzerProblem
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//Constructor name not maching that time we run
             }
         }
+
+        /* UC6:- Use Reflection to invoke Method –analyseMood 
+                 - Use Reflector to Invoke Method
+        */
+        public string InvokeAnalyzerMethod(string message, string methodName)
+        {
+            try
+            {
+                Type type = typeof(MoodAnalyzer);
+               
+                
+                MethodInfo analyzerMoodInfo = type.GetMethod(methodName);
+                MoodAnalyzerFactory Factory = new MoodAnalyzerFactory();
+               object moodAnalyzerObject = Factory.CreateMoodAnalyzerParameterObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer", message);
+                object mood = analyzerMoodInfo.Invoke(moodAnalyzerObject, null);
+                return mood.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_METHOD, "Method is not found");
+            }
+        }
+
 
     }
 }
