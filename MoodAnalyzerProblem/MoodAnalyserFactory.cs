@@ -94,5 +94,30 @@ namespace MoodAnalyzerProblem
         }
 
 
+        /* UC7:- Use Reflection to change mood dynamicall
+                 - User Reflector to Modify mood dynamically
+        */
+
+        public static string SetField(string message, string fieldName)
+        {         
+
+                MoodAnalyzerFactory Fact = new MoodAnalyzerFactory();
+                MoodAnalyzer obj = (MoodAnalyzer)Fact.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
+                Type type = typeof(MoodAnalyzer);
+                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                if (field!= null)
+                {
+                    if (message==null)
+                    {
+                        throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_MESSAGE, "Message should not be null");
+                    }
+                    field.SetValue(obj, message);
+                    return obj.message;
+                }
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.FIELD_NULL, "FieldName should not be null");
+                  
+                
+            
+        }
     }
 }
