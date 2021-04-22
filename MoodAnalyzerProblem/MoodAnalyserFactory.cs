@@ -10,9 +10,9 @@ using System.Reflection;
 namespace MoodAnalyzerProblem
 {
     public class MoodAnalyzerFactory
-    {/* UC4:- create default Constructor Use Reflection to Create MoodAnalyser with default Constructor
-           - Create MoodAnalyserFactory and specify static method to create MoodAnalyser Objec
-           MoodAnalyserObject to create MoodAnalyser object 
+    {/* UC4:- create default Constructor - Use Reflection to Create MoodAnalyser with default Constructor
+              - Create MoodAnalyserFactory and specify static method to create MoodAnalyser Objec
+              MoodAnalyserObject to create MoodAnalyser object 
         */
         public object CreateMoodAnalyzerObject(string className, string constructor)
         {
@@ -27,7 +27,7 @@ namespace MoodAnalyzerProblem
 
                     Assembly assembly = Assembly.GetExecutingAssembly();
                     Type moodAnalyzerType = assembly.GetType(className);
-                    var res = Activator.CreateInstance(moodAnalyzerType);
+                    var res = Activator.CreateInstance(moodAnalyzerType); //Activator class
                     return res;
                 }
                 catch (NullReferenceException)
@@ -44,32 +44,58 @@ namespace MoodAnalyzerProblem
         /* UC5:- create Parameter Constructor Use Reflection to Create MoodAnalyser with Parameter Constructor.
                  - Use MoodAnalyserFactory to create MoodAnalyser Object with Message Parameneter.
          */
-        public object CreateMoodAnalyzerParameterObject(string className, string constructor, string message)
+        public Object CreateMoodAnalyzerParameterObject(string className, string constructorName, string message)
         {
             Type type = typeof(MoodAnalyzer);
 
-            if (type.Name.Equals(className) || type.FullName.Equals(className))  //check class naem same or not
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
             {
-                if (type.Name.Equals(constructor))
-                {
-                    //MoodAnalyzerProblem.MoodAnalyzer
-                    //string pattern = @"." + constructor + "$";
-                    // Match result = Regex.Match(className, pattern); //regex predefine class .pattern matching store result suppose pattern matching then create object than an constructor
 
-                    ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) }); //get constructor fetching one construct bsae on the  he feth string parameter constructor fetching 
-                    var obj = constructorInfo.Invoke(new object[] { message }); //create object that Parameter Constructor by passing message
-                    return obj;
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo constructorObject = type.GetConstructor(new[] { typeof(string) });
+                    Object instance = constructorObject.Invoke(new object[] { message });
+                    return instance;
                 }
                 else
                 {
-                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "constructor not found");//Constructor name not maching that time we run
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_METHOD, "Constructor not found");
                 }
             }
             else
             {
-                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//Constructor name not maching that time we run
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "Class not found");
+
             }
         }
+
+
+        //public object CreateMoodAnalyzerParameterObject(string className, string constructor, string message)
+        //{
+        //    Type type = typeof(MoodAnalyzer);
+
+        //    if (type.Name.Equals(className) || type.FullName.Equals(className))  //check class naem same or not
+        //    {
+        //        if (type.Name.Equals(constructor))
+        //        {
+        //            //MoodAnalyzerProblem.MoodAnalyzer
+        //            //string pattern = @"." + constructor + "$";
+        //            // Match result = Regex.Match(className, pattern); //regex predefine class .pattern matching store result suppose pattern matching then create object than an constructor
+
+        //            ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) }); //get constructor fetching one construct bsae on the  he feth string parameter constructor fetching 
+        //            var obj = constructorInfo.Invoke(new object[] { message }); //create object that Parameter Constructor by passing message
+        //            return obj;
+        //        }
+        //        else
+        //        {
+        //            throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "constructor not found");//Constructor name not maching that time we run
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.CLASS_NOT_FOUND, "class not found");//Constructor name not maching that time we run
+        //    }
+        //}
 
         /* UC6:- Use Reflection to invoke Method –analyseMood 
                  - Use Reflector to Invoke Method
@@ -79,8 +105,7 @@ namespace MoodAnalyzerProblem
             try
             {
                 Type type = typeof(MoodAnalyzer);
-               
-                
+                               
                 MethodInfo analyzerMoodInfo = type.GetMethod(methodName);
                 MoodAnalyzerFactory Factory = new MoodAnalyzerFactory();
                object moodAnalyzerObject = Factory.CreateMoodAnalyzerParameterObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer", message);
@@ -93,31 +118,59 @@ namespace MoodAnalyzerProblem
             }
         }
 
+        
+
 
         /* UC7:- Use Reflection to change mood dynamicall
                  - User Reflector to Modify mood dynamically
         */
 
-        public static string SetField(string message, string fieldName)
-        {         
+        //public static string SetField(string message, string fieldName)
+        //{         
 
-                MoodAnalyzerFactory Fact = new MoodAnalyzerFactory();
-                MoodAnalyzer obj = (MoodAnalyzer)Fact.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
-                Type type = typeof(MoodAnalyzer);
-                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
-                if (field!= null)
+        //        MoodAnalyzerFactory Fact = new MoodAnalyzerFactory();
+        //        MoodAnalyzer obj = (MoodAnalyzer)Fact.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
+        //        Type type = typeof(MoodAnalyzer);
+        //        FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+        //        if (field!= null)
+        //        {
+        //            if (message==null)
+        //            {
+        //                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_MESSAGE, "Message should not be null");
+        //            }
+        //            field.SetValue(obj, message);
+        //            return obj.message;
+        //        }
+        //        throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.FIELD_NULL, "FieldName should not be null");
+        //}
+
+        /* UC7:- Use Reflection to change mood dynamically 
+                 - User Reflector to Modify mood dynamicall
+        */
+        public static string SetField(string message, string fieldName)
+        {
+            try
+            {
+                if (message == null)
                 {
-                    if (message==null)
-                    {
-                        throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_MESSAGE, "Message should not be null");
-                    }
-                    field.SetValue(obj, message);
-                    return obj.message;
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL, "Mood should not be NULL");
                 }
-                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.FIELD_NULL, "FieldName should not be null");
-                  
-                
-            
+
+                MoodAnalyzer obj = new MoodAnalyzer();
+
+                Type type = Type.GetType("MoodAnalyzerProblem.MoodAnalyzer");
+
+                FieldInfo field = type.GetField(fieldName);
+
+                field.SetValue(obj, message);
+
+                return obj.message;
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_FIELD, "No Such Field");
+            }
+
         }
     }
 }
