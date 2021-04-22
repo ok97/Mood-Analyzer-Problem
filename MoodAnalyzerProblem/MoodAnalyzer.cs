@@ -29,10 +29,11 @@ namespace MoodAnalyzerProblem
                 {
                     return "sad";
                 }
-            }
-            catch 
+            }catch
+            //UC2 use --> //catch(NullReferenceException ex)
             {
-                return "happy";                
+                //UC2 use -->// return ex.Message;
+              return "happy";
             }
         }
     }
