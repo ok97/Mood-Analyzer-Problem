@@ -116,61 +116,9 @@ namespace MoodAnalyzerProblem
             {
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_METHOD, "Method is not found");
             }
-        }
+        }      
+
 
         
-
-
-        /* UC7:- Use Reflection to change mood dynamicall
-                 - User Reflector to Modify mood dynamically
-        */
-
-        //public static string SetField(string message, string fieldName)
-        //{         
-
-        //        MoodAnalyzerFactory Fact = new MoodAnalyzerFactory();
-        //        MoodAnalyzer obj = (MoodAnalyzer)Fact.CreateMoodAnalyzerObject("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
-        //        Type type = typeof(MoodAnalyzer);
-        //        FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
-        //        if (field!= null)
-        //        {
-        //            if (message==null)
-        //            {
-        //                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_MESSAGE, "Message should not be null");
-        //            }
-        //            field.SetValue(obj, message);
-        //            return obj.message;
-        //        }
-        //        throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.FIELD_NULL, "FieldName should not be null");
-        //}
-
-        /* UC7:- Use Reflection to change mood dynamically 
-                 - User Reflector to Modify mood dynamicall
-        */
-        public static string SetField(string message, string fieldName)
-        {
-            try
-            {
-                if (message == null)
-                {
-                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL, "Mood should not be NULL");
-                }
-
-                MoodAnalyzer obj = new MoodAnalyzer();
-
-                Type type = Type.GetType("MoodAnalyzerProblem.MoodAnalyzer");
-
-                FieldInfo field = type.GetField(fieldName);
-
-                field.SetValue(obj, message);
-
-                return obj.message;
-            }
-            catch (NullReferenceException)
-            {
-                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_FIELD, "No Such Field");
-            }
-
-        }
     }
 }
